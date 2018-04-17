@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "MasterMason22",
+    "database": "development_mediaTek",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "MasterMason22",
+    "database": "test_mediaTek",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "MasterMason22",
+    "database": "production_mediaTek",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
