@@ -2,13 +2,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Roles', {
-      id: {
+      id_role: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      id_role: {
         type: Sequelize.INTEGER
       },
       label_role: {

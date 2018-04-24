@@ -2,13 +2,10 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Groups', {
-      id: {
+      id_group: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      id_group: {
         type: Sequelize.INTEGER
       },
       label_group: {
