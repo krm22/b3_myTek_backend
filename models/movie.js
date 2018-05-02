@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Movie = sequelize.define('Movie', {
-    id_movie: DataTypes.INTEGER,
+    id_movie: {
+      primaryKey: true,
+      type: DataTypes.INTEGER()
+      },
     title_movie: DataTypes.STRING,
     release_date_movie: DataTypes.DATE,
     creation_date_movie: DataTypes.DATE,

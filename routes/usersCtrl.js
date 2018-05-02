@@ -208,7 +208,6 @@ module.exports = {
         var email = req.body.email_user
         var link_avatar = req.body.avatar_link_user
     
-
         models.User.findAll({
                   include: [{
                     model : models.Movie,
@@ -217,7 +216,7 @@ module.exports = {
                     foreignKey : 'id_user'
                    }]  
                 })
-    .then(users => console.log(users))
+    .then(users =>  res.status(201).json(users))
     .catch(console.error)
 
     }
