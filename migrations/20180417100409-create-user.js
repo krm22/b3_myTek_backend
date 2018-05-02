@@ -20,7 +20,7 @@ module.exports = {
       email_user: {
         type: Sequelize.STRING
       },
-      _link_user: {
+      avatar_link_user: {
         type: Sequelize.STRING
       },
       createdAt: {

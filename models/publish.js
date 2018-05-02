@@ -1,11 +1,34 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Publish = sequelize.define('Publish', {
-    date_publish: DataTypes.DATE,
-    id_movie: DataTypes.INTEGER,
-    id_mediatek: DataTypes.INTEGER,
-    id_user: DataTypes.INTEGER
-  }, {});
+    date_publish: {
+    primaryKey: true,
+    type: DataTypes.INTEGER()
+    },
+    id_movie: {
+    primaryKey: true,
+    type: DataTypes.INTEGER(),
+    model: 'movies',
+    key: 'id_movie'
+    },
+    id_mediatek: {
+    primaryKey: true,
+    type: DataTypes.INTEGER(),
+    model: 'mediatek',
+    key: 'id_mediatek'
+    },
+    id_user:
+    { primaryKey: true,
+    type: DataTypes.INTEGER(),
+    model: 'movies',
+    key: 'id_movie'
+     }
+   }, 
+   {
+    tableName: 'publish',
+    createdAt: false,
+    updatedAt: false  
+  });
   Publish.associate = function(models) {
     // associations can be defined here
   };

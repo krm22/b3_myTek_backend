@@ -12,14 +12,14 @@
     "rest",
     "api"
   ],
-  "author": "mqlk",
+  "author": "Karl Mouat",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "bcrypt": "^1.0.3",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.0",
-    "mysql": "^2.15.0",
     "mysql2": "^1.5.3",
-    "sequelize": "^4.37.4"
+    "sequelize": "^4.37.6"
   }
 }

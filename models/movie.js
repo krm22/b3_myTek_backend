@@ -9,9 +9,17 @@ module.exports = (sequelize, DataTypes) => {
     description_movie: DataTypes.STRING,
     original_title_movie: DataTypes.STRING,
     id_genre: DataTypes.INTEGER
-  }, {});
+  },{
+    tableName: 'movies',
+    createdAt: false,
+    updatedAt: false
+  });
   Movie.associate = function(models) {
-    // associations can be defined here
+    models.Movie.belongsToMany(models.User, { 
+      as: 'users',
+      through: 'publish', 
+      foreignKey: 'id_movie'
+    })
   };
   return Movie;
 };
