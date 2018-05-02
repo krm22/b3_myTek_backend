@@ -207,18 +207,40 @@ module.exports = {
         var password = req.body.password_user
         var email = req.body.email_user
         var link_avatar = req.body.avatar_link_user
-    
+        var id_movie = req.body.id_movie
+
         models.User.findAll({
                   include: [{
-                    model : models.Movie,
-                    as   : 'movies',
-                    through : 'publish',
-                    foreignKey : 'id_user'
-                   }]  
-                })
-    .then(users =>  res.status(201).json(users))
+                    model : models.Publish,
+                    as   : 'publish',
+                    include: [{
+                       model:  models.Movie,
+                    as : 'movie'
+                    }]
+
+                    //foreignKey : 'id_user'
+                 
+                   }]
+                })    
+    .then(users =>  {console.log(users);  res.status(201).json(users)}
+      )
     .catch(console.error)
 
     }
 
+
 }
+
+
+
+
+// .then( (userFound) => {
+//     let roles = [];
+//     userFound.Roles.forEach(role => {
+//         console.log(role);
+//         roles.push(role.label_role);
+//     });
+//     console.log(roles);
+//     if (roles.indexOf('Pédagogie') === -1) {
+//         return res.status(403).json({ 'error': 'not authorized' });
+//     }

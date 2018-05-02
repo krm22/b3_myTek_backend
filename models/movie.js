@@ -18,11 +18,16 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: false
   });
   Movie.associate = function(models) {
-    models.Movie.belongsToMany(models.User, { 
-      as: 'users',
-      through: 'publish', 
+    models.Movie.hasMany(models.Publish, { 
+      as: 'publish',
       foreignKey: 'id_movie'
     })
   };
   return Movie;
 };
+
+// models.Movie.belongsToMany(models.User, { 
+//   as: 'users',
+//   through: 'publish', 
+//   foreignKey: 'id_movie'
+// })
