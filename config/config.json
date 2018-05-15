@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "MasterMason22",
-    "database": "development_mediaTek",
+    "database": "mediaTek",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -21,3 +21,4 @@
     "dialect": "mysql"
   }
 }
+
