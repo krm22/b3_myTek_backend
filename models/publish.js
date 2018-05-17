@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     id_user:
     { primaryKey: true,
     type: DataTypes.INTEGER(),
-    key: 'id_movie'
+    key: 'id_user'
      }
    }, 
    {
@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
     }),
     models.Publish.belongsTo(models.Mediatek, { 
       as: 'mediatek',
-      foreignKey: 'id_user'
+      foreignKey: 'id_mediatek'
     })
   };
   return Publish;
