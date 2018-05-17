@@ -25,9 +25,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Movie;
 };
-
-// models.Movie.belongsToMany(models.User, { 
-//   as: 'users',
-//   through: 'publish', 
-//   foreignKey: 'id_movie'
-// })

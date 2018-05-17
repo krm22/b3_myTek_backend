@@ -15,7 +15,7 @@ module.exports = {
         var surname = req.body.surname_user
         var password = req.body.password_user
         var email = req.body.email_user
-        var link_avatar = req.body.avatar_link_user
+      //  var link_avatar = req.body.avatar_link_user
 
         if (email == null || password == null) {
             return res.status(400).json({
@@ -45,8 +45,7 @@ module.exports = {
                                 firstname_user: firstname,
                                 surname_user: surname,
                                 password_user: bcryptedPassword,
-                                email_user: email,
-                                avatar_link_user: link_avatar
+                                email_user: email
                             })
                             .then((newUser) => {
                                 return res.status(201).json({
@@ -86,20 +85,18 @@ module.exports = {
                 'error': 'email is not valid'
             });
         }
-
         models.User.findOne({
                 where: {
                     email_user: email,
                 }
-            }, console.log("==============", email))
+            })
             .then((userFound) => {
-                console.log("==============", email)
                 if (userFound) {
                     bcrypt.compare(password, userFound.password_user, (err, resBcrypt) => {
                         if (resBcrypt) {
                             return res.status(200).json({
                                 'id_user': userFound.id_user,
-                                'token': jwtUtils.generateTokenForUser(userFound)
+                                'token': jwtUtils.generateTokenForUser(userFound),
                             })
                         } else {
                             return res.status(403).json({
@@ -216,10 +213,7 @@ module.exports = {
                     include: [{
                        model:  models.Movie,
                     as : 'movie'
-                    }]
-
-                    //foreignKey : 'id_user'
-                 
+                     }]
                    }]
                 })    
     .then(users =>  {console.log(users);  res.status(201).json(users)}
@@ -228,6 +222,12 @@ module.exports = {
 
     }
 
+
+
+
+
+
+    
 
 }
 
