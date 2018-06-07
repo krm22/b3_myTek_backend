@@ -21,6 +21,18 @@ module.exports = (sequelize, DataTypes) => {
       as: 'publish',
       foreignKey: 'id_user'
     });
+    models.User.hasMany(models.User_Group,{
+      as: 'users_group',
+      foreignKey: 'id_user'
+    });
+    models.User.hasMany(models.Group,{
+        as:'group',
+        foreignKey: 'id_group'
+    }),
+    models.User.hasMany(models.Role,{
+      as:'role',
+      foreignKey: 'id_role'
+  })
   };
   return User;
 };

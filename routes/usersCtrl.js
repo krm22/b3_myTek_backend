@@ -28,7 +28,6 @@ module.exports = {
                 'error': 'email is not valid'
             });
         }
-
         // Todo:  verify psuedo length, mail regex, password etc 
         models.User.findOne({
                 attributes: ['email_user'],
@@ -125,7 +124,7 @@ module.exports = {
                 'error': 'wrong token'
             });
         models.User.findOne({
-            attributes: ['id_user', 'email_user', 'firstname_user', 'surname_user', 'password_user', 'avatar_link_user'],
+            attributes: ['id_user', 'email_user', 'firstname_user', 'surname_user', 'password_user'],
             where: 
             { id_user: id_user },
         }).then((user) => {
@@ -196,51 +195,6 @@ module.exports = {
                 });
             }
         });
-    },
-    getUsersMoviesList: (req, res ) => {
-        var id_user = req.body.id_user
-        var firstname = req.body.firstname_user
-        var surname = req.body.surname_user
-        var password = req.body.password_user
-        var email = req.body.email_user
-        var link_avatar = req.body.avatar_link_user
-        var id_movie = req.body.id_movie
-
-        models.User.findAll({
-                  include: [{
-                    model : models.Publish,
-                    as   : 'publish',
-                    include: [{
-                       model:  models.Movie,
-                    as : 'movie'
-                     }]
-                   }]
-                })    
-    .then(users =>  {console.log(users);  res.status(201).json(users)}
-      )
-    .catch(console.error)
-
     }
-
-
-
-
-
-
-    
-
 }
 
-
-
-
-// .then( (userFound) => {
-//     let roles = [];
-//     userFound.Roles.forEach(role => {
-//         console.log(role);
-//         roles.push(role.label_role);
-//     });
-//     console.log(roles);
-//     if (roles.indexOf('Pédagogie') === -1) {
-//         return res.status(403).json({ 'error': 'not authorized' });
-//     }

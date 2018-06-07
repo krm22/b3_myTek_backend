@@ -9,7 +9,7 @@ module.exports = {
         },
         JWT_SIGN_SECRET,
         {
-            expiresIn: '4h'
+            expiresIn: '12h'
         })
     },
     parseAuthorization:(authorization) => {
@@ -23,7 +23,7 @@ module.exports = {
             var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
             if(jwtToken != null)
              id_user = jwtToken.id_user;
-          } catch(err) { }
+          } catch(err) { console.log("JWT ERROR") }
         }
         return id_user;
     }
