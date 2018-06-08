@@ -195,6 +195,50 @@ module.exports = {
                 });
             }
         });
-    }
+    },
+     userGetGroupsMediateks:(req, res)=>{
+            var headerAuth = req.headers['authorization'];
+            var id_user = jwtUtils.getUserId(headerAuth);
+        
+            if (id_user < 0)
+                return res.status(400).json({
+                    'error': 'wrong token'
+                });
+                
+                models.User.findAll({
+                    // where: {
+                    //     id_user: id_user
+                    // },
+                    include: [{
+                        model: models.User_Group,
+                        as: 'users_group',
+                        include:[{
+                            model: models.Group,
+                            as: 'group',
+                        }, {
+                            model: models.Role,
+                            as: 'role'
+                        }
+                        ],
+                    }],
+                    include:[{
+                        model: models.Publish,
+                        as: 'publish',
+                        include:[{
+                            model: models.Mediatek,
+                            as: 'mediatek',
+                        }, {
+                            model: models.Movie,
+                            as: 'movie'
+                        }
+                       ]
+                    }],
+                    
+                }).then(
+                    (userGroupMediaProfile)=>{
+                        return res.status(201).json({userGroupMediaProfile})
+                    }
+                )
+        }
 }
 

@@ -22,6 +22,14 @@ module.exports = (sequelize, DataTypes) => {
       as: 'publish',
       foreignKey: 'id_movie'
     })
+    models.Movie.hasMany(models.User, { 
+      as: 'users',
+      foreignKey: 'id_user'
+    })
+    models.Movie.hasMany(models.Role, { 
+      as: 'role',
+      foreignKey: 'id_role'
+    })
   };
   return Movie;
 };

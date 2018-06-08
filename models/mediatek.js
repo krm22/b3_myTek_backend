@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Mediatek = sequelize.define('Mediatek', {
-    id_mediatek: DataTypes.INTEGER,
+    id_mediatek: {
+      primaryKey: true,
+      type: DataTypes.INTEGER(),
+    },
     label_mediatek: DataTypes.STRING,
     creation_date_mediatek: DataTypes.DATE,
     modification_date_mediatek: DataTypes.DATE,

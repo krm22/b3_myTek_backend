@@ -38,6 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       as: 'mediatek',
       foreignKey: 'id_mediatek'
     })
+    models.Publish.belongsTo(models.User_Group, { 
+      as: 'users_group',
+      foreignKey: 'id_user'
+    })
   };
   return Publish;
 };

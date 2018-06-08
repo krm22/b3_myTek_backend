@@ -34,6 +34,10 @@ User_Group.associate = function(models) {
       as: 'role',
       foreignKey: 'id_role'
     })
+    models.User_Group.belongsTo(models.Publish, { 
+      as: 'publish',
+      foreignKey: 'id_user'
+    })
   };
   return User_Group;
 };
