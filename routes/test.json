@@ -1,0 +1,173 @@
+[
+    {
+        "id_user": 167,
+        "firstname_user": "Isaac",
+        "surname_user": "Mouat",
+        "password_user": "$2a$05$a8ILTyMvHq26Gaswb6cJZ.6QOC378zffAZKX1dKwxmDZgIOlNvLKS",
+        "email_user": "isaac@gmail.com",
+        "avatar_link_user": null,
+        "users_group": [
+            {
+                "id_user": 167,
+                "id_group": 21,
+                "id_role": 5,
+                "group": {
+                    "id_group": 21,
+                    "label_group": "TestGroup1",
+                    "avatar_link_group": null,
+                    "creation_date_group": "2016-08-08",
+                    "modification_date_group": "2016-08-08",
+                    "public_group": true
+                },
+                "role": {
+                    "id_role": 5,
+                    "label_role": null
+                }
+            },
+            {
+                "id_user": 167,
+                "id_group": 22,
+                "id_role": 6,
+                "group": {
+                    "id_group": 22,
+                    "label_group": "TestGroup2",
+                    "avatar_link_group": null,
+                    "creation_date_group": "2016-08-08",
+                    "modification_date_group": "2016-08-08",
+                    "public_group": true
+                },
+                "role": {
+                    "id_role": 6,
+                    "label_role": "Administrator"
+                }
+            }
+        ]
+    }
+]
+
+{
+    "userGroupsFound": [
+        {
+            "id_user": 175,
+            "firstname_user": "isaac",
+            "surname_user": "mouat",
+            "password_user": "$2a$05$XqSAtnn0p/.W/QAh1n6Qx.hKh2deXokRpoDiwPA4r6iX9wJzDhRAK",
+            "email_user": "isaac@gmail.com",
+            "avatar_link_user": null,
+            "users_group": [
+                {
+                    "id_user": 175,
+                    "id_group": 52,
+                    "id_role": 6,
+                    "group": {
+                        "id_group": 52,
+                        "label_group": "BubbasGroup",
+                        "avatar_link_group": null,
+                        "creation_date_group": "2016-08-09",
+                        "modification_date_group": "2016-08-09",
+                        "public_group": true
+                    },
+                    "role": {
+                        "id_role": 6,
+                        "label_role": "Administrator"
+                    }
+                },
+                {
+                    "id_user": 175,
+                    "id_group": 53,
+                    "id_role": 6,
+                    "group": {
+                        "id_group": 53,
+                        "label_group": "BubbasGroup2",
+                        "avatar_link_group": null,
+                        "creation_date_group": "2016-08-09",
+                        "modification_date_group": "2016-08-09",
+                        "public_group": true
+                    },
+                    "role": {
+                        "id_role": 6,
+                        "label_role": "Administrator"
+                    }
+                },
+                {
+                    "id_user": 175,
+                    "id_group": 54,
+                    "id_role": 6,
+                    "group": {
+                        "id_group": 54,
+                        "label_group": "BubbasGroup3",
+                        "avatar_link_group": null,
+                        "creation_date_group": "2016-08-09",
+                        "modification_date_group": "2016-08-09",
+                        "public_group": true
+                    },
+                    "role": {
+                        "id_role": 6,
+                        "label_role": "Administrator"
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+User.associate = function (models) {
+    models.User.hasMany(models.Publish, {
+      as: 'publish',
+      foreignKey: 'id_user'
+    });
+    models.User.hasMany(models.User_Group,{
+      as: 'users_group',
+      foreignKey: 'id_user'
+    });
+    models.User.hasMany(models.Group,{
+        foreignKey: 'id_group',
+        as:'group',
+    })
+    models.User.hasMany(models.Role,{
+      foreignKey: 'id_role',
+      as:'role',
+  })
+  };
+
+  userGetGroupsMediateks:(req, res)=>{
+    var headerAuth = req.headers['authorization'];
+    var id_user = jwtUtils.getUserId(headerAuth);
+
+    if (id_user < 0)
+        return res.status(400).json({
+            'error': 'wrong token'
+        });
+        
+        models.User.findAll({
+            where: {
+                id_user: id_user
+            },
+            include: [{
+                model: models.User_Group,
+                as: 'users_group',
+                model: models.Publish,
+                as: 'publish',
+            
+                    model: models.Group,
+                    as: 'group',
+                }, {
+                    model: models.Role,
+                    as: 'role'
+                },{
+                    model: models.Movie,
+                    as: 'movies'
+                  },
+                  {
+                    model: models.MediaTeks,
+                    as: 'mediateks'
+                  }
+            
+            ]
+        }).then(
+            (userGroupMediaProfile)=>{
+                return res.status(201).json(userGroupMediaProfile)
+            }
+        )
+}
+apiRouter.route('/users/view/Group/MediaTek/Movies').get(usersCtrl.userGetGroupsMediateks)
