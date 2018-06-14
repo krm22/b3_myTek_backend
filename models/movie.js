@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var Movie = sequelize.define('Movie', {
     id_movie: {
       primaryKey: true,
-      type: DataTypes.INTEGER()
+      type: DataTypes.INTEGER(),
+      autoIncrement: true,
       },
     title_movie: DataTypes.STRING,
     release_date_movie: DataTypes.DATE,

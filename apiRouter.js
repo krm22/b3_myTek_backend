@@ -17,7 +17,9 @@ exports.router = (function(){
 
     //Movie information api routes
     apiRouter.route('/users/usersmovielist').get(moviesCtrl.getUsersMoviesList)
-    apiRouter.route('/users/usermovielist').get(moviesCtrl.getUserMoviesList)
+    apiRouter.route('/users/create/usersmovielist').put(moviesCtrl.getUsersMoviesList)
+    apiRouter.route('/users/movielist').get(moviesCtrl.getUserMoviesList)
+    apiRouter.route('/users/create/movielist').post(moviesCtrl.userCreateMovieList)
     
 
     //Group information routes

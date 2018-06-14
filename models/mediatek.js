@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     id_mediatek: {
       primaryKey: true,
       type: DataTypes.INTEGER(),
+      autoIncrement: true,
     },
     label_mediatek: DataTypes.STRING,
     creation_date_mediatek: DataTypes.DATE,
