@@ -3,7 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   var Group = sequelize.define('Group', {
     id_group: {
       primaryKey: true,
-      type: DataTypes.INTEGER()
+      type: DataTypes.INTEGER(),
+      autoIncrement: true,
     },
     label_group: DataTypes.STRING,
     avatar_link_group: DataTypes.STRING,

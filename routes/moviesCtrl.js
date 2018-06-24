@@ -7,16 +7,23 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 
 
 module.exports = {
-    getUsersMoviesList: (req, res) => {
-        var id_user = req.body.id_user
-        var firstname = req.body.firstname_user
-        var surname = req.body.surname_user
-        var password = req.body.password_user
-        var email = req.body.email_user
-        var link_avatar = req.body.avatar_link_user
-        var id_movie = req.body.id_movie
+    userAddMovie: (req, res) => {
+        var headerAuth = req.headers['authorization'];
+        var id_user = jwtUtils.getUserId(headerAuth);
 
-        models.User.findAll({
+
+        var title_movie = req.body.title_movie 
+        var release_date_movie = req.body.release_date_movie
+        var creation_date_movie = req.body.creation_date_movie
+        var poster_movie = req.body.poster_movie
+        var description_movie = req.body.description_movie
+        var original_title_movie = req.body.original_title_movie
+        var id_genre = req.body.id_genre
+
+        models.User.findOne({
+            where: {
+                id_user: id_user
+            },
                 include: [{
                     model: models.Publish,
                     as: 'publish',
@@ -31,37 +38,33 @@ module.exports = {
             })
             .catch(console.error)
     },
-    getUserMoviesList: (req, res) => {
+    getUserMoviesList:  (req, res)=>{
         var headerAuth = req.headers['authorization'];
         var id_user = jwtUtils.getUserId(headerAuth);
-
-        var id_user = req.body.id_user
-        var firstname = req.body.firstname_user
-        var surname = req.body.surname_user
-        var password = req.body.password_user
-        var email = req.body.email_user
-        var link_avatar = req.body.avatar_link_user
-        var id_movie = req.body.id_movie
-
-        models.User.findOne({
+    
+        if (id_user < 0)
+            return res.status(400).json({
+                'error': 'wrong token'
+            });
+            
+            models.User.findAll({
                 where: {
                     id_user: id_user
                 },
-                include: [{
+                include:[{
                     model: models.Publish,
                     as: 'publish',
-                    include: [{
+                    include:[ {
                         model: models.Movie,
-                        as: 'movie',
-                        model: models.Mediatek,
-                        as: 'mediatek'
-                    }]
-                }]
-            })
-            .then(users => {
-                res.status(201).json(users)
-            })
-            .catch(console.error)
+                        as: 'movie'
+                    }
+                   ]
+                }],
+            }).then(
+                (userGroupMediaProfile)=>{
+                    return res.status(201).json({userGroupMediaProfile})
+                }
+            )
     },
     userCreateMovieList: (req, res) => {
         var headerAuth = req.headers['authorization'];
@@ -94,9 +97,7 @@ module.exports = {
         })
         .then((userGroup) => {
           let publishTableContents = userGroup.publish;
-        //  let m = [].concat.apply([],publishTableContents);
-
-            if (publishTableContents === null || userGroup.publish['movie.title_movie'] != title_movie) {
+            if (publishTableContents === null || userGroup.publish['title_movie'] != title_movie) {
                     let promise1 = models.Mediatek.create({
                         label_mediatek: label_mediatek,
                         public_mediatek: public_mediatek

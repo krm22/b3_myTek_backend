@@ -6,9 +6,7 @@ var asyncLib = require('async')
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     module.exports = {
-
         createUserGroup: (req, res) => {
-            console.log("=================================================")
             var headerAuth = req.headers['authorization'];
             var id_user = jwtUtils.getUserId(headerAuth);
 
@@ -44,25 +42,39 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
                 }]
             }).then((userGroup) => {
                 if (!userGroup[0].users_group[0] || userGroup[0].users_group[0].group.label_group != label_group) {
-                    let newGroup = models.Group.create({
-                            id_group: id_group,
+                    let promise1 = models.Group.create({
                             label_group: label_group,
                             avatar_link_group: avatar_group,
                             creation_date_group: creation_date_group,
                             modification_date_group: modification_date_group,
                             public_group: public_group,
-                        }).then(models.Role.create({
-                            id_role: id_role,
+                        })
+                        let promise2 = models.Role.create({
                             label_role: label_role
-                        })).then(models.User_Group.create({
-                            id_group: id_group,
-                            id_role: id_role,
-                            id_user: id_user
-                        }))
-                        .then((newGroup) => {
-                            return res.status(201).json({
-                                newGroup
+                        })
+
+                        let values = [ promise1, promise2 ]
+
+                        Promise.all(values)
+                        .then((values)=>{
+                            let merge = [].concat.apply([],values);
+                            console.log(merge)
+                            let groupId = merge[0].dataValues.id_group;
+                            let roleId = merge[1].dataValues.id_role;
+
+                      let promise3 = models.User_Group.create({
+                                id_group: groupId,
+                                id_role: roleId,
+                                id_user: id_user
                             })
+                        let values2 = [ promise1, promise2, promise3 ]     
+
+                        Promise.all(values2)
+                        .then((values2)=>{
+                            return res.status(201).json({
+                                values2
+                             })
+                         })
                         }).catch((err) => {
                             return res.status(400).json({
                                 'error': 'group already exits'

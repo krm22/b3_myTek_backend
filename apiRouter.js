@@ -13,11 +13,10 @@ exports.router = (function(){
     apiRouter.route('/users/login').post(usersCtrl.login);
     apiRouter.route('/users/userprofile').get(usersCtrl.getUserProfile)
     apiRouter.route('/users/update/userprofile').put(usersCtrl.updateUserProfile)
-    apiRouter.route('/users/view/Group/MediaTek/Movies').get(usersCtrl.userGetGroupsMediateks)
+  
 
     //Movie information api routes
-    apiRouter.route('/users/usersmovielist').get(moviesCtrl.getUsersMoviesList)
-    apiRouter.route('/users/create/usersmovielist').put(moviesCtrl.getUsersMoviesList)
+    apiRouter.route('/users/add/movie').post(moviesCtrl.userAddMovie)
     apiRouter.route('/users/movielist').get(moviesCtrl.getUserMoviesList)
     apiRouter.route('/users/create/movielist').post(moviesCtrl.userCreateMovieList)
     
